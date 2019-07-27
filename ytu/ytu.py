@@ -1,17 +1,17 @@
 # -*- coding: utf-8 -*-
-from urllib.parse import parse_qs, urlparse, unquote
+from urllib.parse import parse_qs, urlparse, unquote, ParseResult
 from typing import Optional
 
 
 domains = {'youtube.com', 'youtu.be', 'yt.be'}
 
 
-def get_param_value(purl: str, name: str) -> Optional[str]:
+def param_value(parsed_url: ParseResult, name: str) -> Optional[str]:
     """Get the first value of the given URL parameter from a urllib.parse.ParseResult object.
 
     Values in dictionary returned by parse_qs are lists."""
-    if purl.query:
-        return parse_qs(purl.query).get(name, [None]).pop()
+    if parsed_url.query:
+        return parse_qs(parsed_url.query).get(name, [None]).pop()
 
 
 def is_youtube(url: str) -> bool:
@@ -46,11 +46,11 @@ def video_id(url: str, recursion_depth: int = 0, max_recursion_depth: int = 10) 
     elif purl.netloc.endswith('youtube.com'):
         # Check for verify age URLs.
         if path.startswith('verify_age'):
-            next_url = get_param_value(purl, 'next_url')
+            next_url = param_value(purl, 'next_url')
             if next_url:
                 # Next URL doesn't contain the host.
                 if next_url.startswith('/'):
-                    vid = get_param_value(urlparse(unquote(next_url)), 'v')
+                    vid = param_value(urlparse(unquote(next_url)), 'v')
                 # Next URL is an absolute URL.
                 else:
                     vid = video_id(unquote(next_url), recursion_depth=recursion_depth + 1)
@@ -59,12 +59,12 @@ def video_id(url: str, recursion_depth: int = 0, max_recursion_depth: int = 10) 
             vid = path.split('/')[1]
         # Check for standard watch URLs.
         elif path.startswith('watch'):
-            vid = get_param_value(purl, 'v')
+            vid = param_value(purl, 'v')
         # Check for attribution links.
         elif path.startswith('attribution_link'):
-            watch_path = get_param_value(purl, 'u')
+            watch_path = param_value(purl, 'u')
             if watch_path:
-                vid = get_param_value(urlparse(watch_path), 'v')
+                vid = param_value(urlparse(watch_path), 'v')
 
     if vid and len(vid) >= 11:
         # Cut off extraneous characters after the ID.

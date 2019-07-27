@@ -11,7 +11,8 @@ def param_value(parsed_url: ParseResult, name: str) -> Optional[str]:
 
     Values in dictionary returned by parse_qs are lists."""
     if parsed_url.query:
-        return parse_qs(parsed_url.query).get(name, [None]).pop()
+        return parse_qs(parsed_url.query).get(name, ['']).pop()
+    return None
 
 
 def is_youtube(url: str) -> bool:
@@ -34,7 +35,7 @@ def video_id(url: str, recursion_depth: int = 0, max_recursion_depth: int = 10) 
     """
 
     if recursion_depth > max_recursion_depth:
-        return
+        return None
 
     vid = None
     purl = urlparse(url)
@@ -69,3 +70,4 @@ def video_id(url: str, recursion_depth: int = 0, max_recursion_depth: int = 10) 
     if vid and len(vid) >= 11:
         # Cut off extraneous characters after the ID.
         return vid[:11]
+    return None

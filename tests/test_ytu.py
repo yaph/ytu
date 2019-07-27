@@ -2,9 +2,6 @@
 # -*- coding: utf-8 -*-
 
 """Tests for `ytu` package."""
-
-import pytest
-
 import ytu
 
 

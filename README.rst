@@ -9,28 +9,19 @@ ytu
 .. image:: https://img.shields.io/travis/yaph/ytu.svg
         :target: https://travis-ci.org/yaph/ytu
 
-.. image:: https://readthedocs.org/projects/ytu/badge/?version=latest
-        :target: https://ytu.readthedocs.io/en/latest/?badge=latest
-        :alt: Documentation Status
 
 
-.. image:: https://pyup.io/repos/github/yaph/ytu/shield.svg
-     :target: https://pyup.io/repos/github/yaph/ytu/
-     :alt: Updates
+A library to extract information from YouTube URLs. Currently provides the function `video_id` to retrieve the video ID from a YouTube URL.
 
 
+Usage
+-----
 
-Python Boilerplate contains all the boilerplate you need to create a Python package.
+::
 
+        import ytu
 
-* Free software: MIT license
-* Documentation: https://ytu.readthedocs.io.
-
-
-Features
---------
-
-* TODO
+        print(ytu.video_id('https://www.youtube.com/watch?v=dQw4w9WgXcQ'))
 
 Credits
 -------

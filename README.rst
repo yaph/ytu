@@ -21,7 +21,10 @@ Usage
 
         import ytu
 
-        print(ytu.video_id('https://www.youtube.com/watch?v=dQw4w9WgXcQ'))
+        url = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'
+        if ytu.is_youtube(url):
+            print(ytu.video_id(url))
+
 
 Credits
 -------

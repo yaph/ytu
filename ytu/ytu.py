@@ -1,8 +1,12 @@
 # -*- coding: utf-8 -*-
 from urllib.parse import parse_qs, urlparse, unquote
+from typing import Optional
 
 
-def get_param_value(purl, name):
+domains = {'youtube.com', 'youtu.be', 'yt.be'}
+
+
+def get_param_value(purl: str, name: str) -> Optional[str]:
     """Get the first value of the given URL parameter from a urllib.parse.ParseResult object.
 
     Values in dictionary returned by parse_qs are lists."""
@@ -10,8 +14,18 @@ def get_param_value(purl, name):
         return parse_qs(purl.query).get(name, [None]).pop()
 
 
-def video_id(url, recursion_depth=0, max_recursion_depth=10):
-    """Extract and return youtube video ID.
+def is_youtube(url: str) -> bool:
+    """Test whether the given URL belongs to one of the recognized YouTube domains."""
+
+    host = urlparse(url.strip()).netloc
+    for domain in domains:
+        if host == domain or host.endswith('.' + domain):
+            return True
+    return False
+
+
+def video_id(url: str, recursion_depth: int = 0, max_recursion_depth: int = 10) -> Optional[str]:
+    """Extract and return YouTube video ID.
 
     Assumption: a YouTube video ID is 11 characters long. All manually tested
     video IDs that were shorter resulted in an error. See these discussions:

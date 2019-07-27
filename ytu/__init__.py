@@ -4,7 +4,7 @@
 
 __author__ = """Ramiro Gómez"""
 __email__ = 'code@ramiro.org'
-__version__ = '0.1.0'
+__version__ = '0.2.0'
 
 
-from .ytu import video_id
+from .ytu import video_id, is_youtube

@@ -7,6 +7,7 @@ def test_is_youtube():
     tests = [
         ('http://youtu.be/zoLVUxKCWhY', True),
         ('http://www.youtube.com/watch?v=VvRC0wxM-yM', True),
+        ('http://wwwwwwyoutube.com/watch?v=VvRC0wxM-yM', False),
         ('http://example.com/zoLVUxKCWhY', False)
     ]
 
